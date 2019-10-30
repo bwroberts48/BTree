@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BTree
 {
-    public class BTree<T>
+    public class BTree<T> where T: IComparable<T>
     {
         Node<T> m_root;
         int m_height;
@@ -43,8 +43,25 @@ namespace BTree
             }
             else if(heightOfInsertion > 1)
             {
-                //Find which way to go and call insert with -1 to heighOfInsertion
+                //Find which way to go and call insert with -1 to heightOfInsertion
+                int index = FindInsertionIndex(data, root.Nodes);
+                Insert(data, heightOfInsertion - 1, root.Nodes[index]);
             }
+
+            
+        }
+
+        //Finds where an object sorts within the nodes list 
+        private int FindInsertionIndex(T data, List<Node<T>> nodes)
+        {
+            int index = -1;
+            for (int i = 0; i < nodes.Count && index == -1; ++i)
+            {
+                //If the data is smaller than nodes[i].Data declare that as the correct position
+                if(data.CompareTo(nodes[i].Data) <= 0)
+                    index = i;
+            }
+                return index;
         }
     }
 }
