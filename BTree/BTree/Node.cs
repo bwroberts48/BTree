@@ -6,21 +6,16 @@ using System.Threading.Tasks;
 
 namespace BTree
 {
-    internal class Node<T>
+    public class Node<T> where T : IComparable<T>
     {
         public Node(T data)
         {
             Data = data;
+            Nodes = new List<Node<T>>();
         }
-        public T Data
-        {
-            set { Data = value; }
-            get { return Data; }
-        }
-        public List<Node<T>> Nodes
-        {
-            set { Nodes = value; }
-            get { return Nodes; }
-        }
+
+        public T Data { get; set; }
+
+        public List<Node<T>> Nodes { get; set; }
     }
 }

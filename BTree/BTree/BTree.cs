@@ -8,54 +8,66 @@ namespace BTree
 {
     public class BTree<T> where T: IComparable<T>
     {
-        Node<T> m_root;
-        int m_height;
+        public Node<T> Root { get; private set; }
+        public int Height { get; private set; }
         public BTree()
         {
-            m_root = null;
-            m_height = 0;
+            Root = null;
+            Height = -1;
         }
         public void Insert(T data, int heightOfInsertion)
         {
             //Disallow the client to insert two levels of height with one node
-            if(heightOfInsertion > m_height + 1)
+            if(heightOfInsertion > Height + 1)
             {
-                throw new Exception();
+                throw new Exception("Insertion height cannot be more than 1 greater than overall tree height");
             }
             //Disallow the client to insert at 0 or negative heights
-            if(heightOfInsertion <= 0)
+            if(heightOfInsertion < 0)
             {
-                throw new Exception();
+                throw new Exception("Insertion height cannot be less 0");
             }
             //Disallow the client to insert multiple nodes at height 1
-            if(heightOfInsertion == 1 && m_root != null)
+            if(heightOfInsertion == 0 && Root != null)
             {
-                throw new Exception();
+                throw new Exception("There cannot be more than one Node at height 0");
             }
 
-            Insert(data, heightOfInsertion, m_root);
+            if (heightOfInsertion == Height + 1)
+                ++Height;
+
+            if (Root == null)
+            {
+                Root = new Node<T>(data);
+                Root.Nodes = new List<Node<T>>();
+            }
+            else
+                Insert(data, heightOfInsertion - 1, Root);
         }
-        private void Insert(T data, int heightOfInsertion, Node<T> root)
+        private void Insert(T data, int heightBeforeInsertion, Node<T> root)
         {
-            if(heightOfInsertion == 0)
+            //Insert
+            if(heightBeforeInsertion == 0)
             {
-                root = new Node<T>(data);
+                root.Nodes.Add(new Node<T>(data));
             }
-            else if(heightOfInsertion > 1)
+            //Otherwise, search for the correct child of root to make the next root
+            else
             {
-                //Find which way to go and call insert with -1 to heightOfInsertion
+                //Find where the data fits in the next list of nodes
                 int index = FindInsertionIndex(data, root.Nodes);
-                Insert(data, heightOfInsertion - 1, root.Nodes[index]);
-            }
 
-            
+                //Recall insert with 1 less height of insertion
+                Insert(data, heightBeforeInsertion - 1, root.Nodes[index]);
+            }
         }
 
-        //Finds where an object sorts within the nodes list 
+        //Finds where an object sorts within the nodes list, returns -1
         private int FindInsertionIndex(T data, List<Node<T>> nodes)
         {
-            int index = -1;
-            for (int i = 0; i < nodes.Count && index == -1; ++i)
+            //If the node is larger than all data (or its the first child of the root from Insert) place it in the largest index
+            int index = nodes.Count - 1;
+            for (int i = 0; i < nodes.Count - 1 && index == nodes.Count - 1; ++i)
             {
                 //If the data is smaller than nodes[i].Data declare that as the correct position
                 if(data.CompareTo(nodes[i].Data) <= 0)
