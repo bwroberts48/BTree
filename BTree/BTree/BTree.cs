@@ -77,6 +77,7 @@ namespace BTree
                 return index;
         }
 
+        //Selection Sort
         private void SortNodes(List<Node<T>> nodes)
         {
             int smallest;
