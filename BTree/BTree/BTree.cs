@@ -50,6 +50,7 @@ namespace BTree
             if(heightBeforeInsertion == 0)
             {
                 root.Nodes.Add(new Node<T>(data));
+                SortNodes(root.Nodes);
             }
             //Otherwise, search for the correct child of root to make the next root
             else
@@ -74,6 +75,24 @@ namespace BTree
                     index = i;
             }
                 return index;
+        }
+
+        private void SortNodes(List<Node<T>> nodes)
+        {
+            int smallest;
+            T buffer;
+            for (int i = 0; i < nodes.Count - 1; i++)
+            {
+                smallest = i;
+                for (int j = i + 1; j < nodes.Count; j++)
+                {
+                    if (nodes[j].Data.CompareTo(nodes[smallest].Data) < 0)
+                        smallest = j;
+                }
+                buffer = nodes[i].Data;
+                nodes[i].Data = nodes[smallest].Data;
+                nodes[smallest].Data = buffer;
+            }
         }
     }
 }

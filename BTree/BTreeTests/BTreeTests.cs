@@ -49,5 +49,15 @@ namespace BTreeTests
             Assert.AreEqual(4, testTree.Root.Nodes[0].Data);
             Assert.AreEqual(6, testTree.Root.Nodes[1].Data);
         }
+
+        [TestMethod]
+        public void InsertSecondUnorderedChild()
+        {
+            testTree.Insert(5, 0);
+            testTree.Insert(6, 1);
+            testTree.Insert(4, 1);
+            Assert.AreEqual(4, testTree.Root.Nodes[0].Data);
+            Assert.AreEqual(6, testTree.Root.Nodes[1].Data);
+        }
     }
 }
