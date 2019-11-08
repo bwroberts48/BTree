@@ -49,6 +49,12 @@ namespace BTree
             //Insert
             if(heightBeforeInsertion == 0)
             {
+                //Check for duplicate data and throw an exception if there is a duplicate
+                foreach(Node<T> node in root.Nodes)
+                {
+                    if (node.Data.CompareTo(data) == 0)
+                        throw new Exception("Cannot place duplicate data in child list");
+                }
                 root.Nodes.Add(new Node<T>(data));
                 SortNodes(root.Nodes);
             }
@@ -77,7 +83,9 @@ namespace BTree
                 return index;
         }
 
-        //Selection Sort
+
+
+        //Selection Sort passed through list
         private void SortNodes(List<Node<T>> nodes)
         {
             int smallest;

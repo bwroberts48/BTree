@@ -72,6 +72,14 @@ namespace BTreeTests
         }
 
         [TestMethod]
+        public void InsertSameDataAcrossSeperateListsYieldsNoException()
+        {
+            testTree.Insert(5, 0);
+            testTree.Insert(4, 1);
+            testTree.Insert(4, 2);
+        }
+
+        [TestMethod]
         public void ComplexNodesSortInsertion()
         {
             testTree.Insert(5, 0);
@@ -116,6 +124,15 @@ namespace BTreeTests
         public void NodeHeightTooFarException()
         {
             testTree.Insert(5, 1);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
+        public void InsertRepeatDataException()
+        {
+            testTree.Insert(5, 0);
+            testTree.Insert(2, 1);
+            testTree.Insert(2, 1);
         }
     }
 }
