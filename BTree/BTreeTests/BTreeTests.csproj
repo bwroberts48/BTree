@@ -50,7 +50,8 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BTreeTests.cs" />
+    <Compile Include="BTreeDeletionTests.cs" />
+    <Compile Include="BTreeInsertionTests.cs" />
     <Compile Include="NodeTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -5,7 +5,7 @@ using BTree;
 namespace BTreeTests
 {
     [TestClass]
-    public class BTreeTests
+    public class BTreeInsertionTests
     {
         BTree<int> testTree;
 
@@ -21,6 +21,7 @@ namespace BTreeTests
             testTree.Insert(5, 0);
             Assert.IsNotNull(testTree.Root);
             Assert.AreEqual(5, testTree.Root.Data);
+            Assert.AreEqual(0, testTree.Height);
         }
 
         [TestMethod]
@@ -28,7 +29,8 @@ namespace BTreeTests
         {
             testTree.Insert(5, 0);
             testTree.Insert(4, 1);
-            Assert.AreEqual(4, testTree.Root.Nodes[0].Data);   
+            Assert.AreEqual(4, testTree.Root.Nodes[0].Data);
+            Assert.AreEqual(1, testTree.Height);
         }
 
         [TestMethod]
@@ -48,6 +50,7 @@ namespace BTreeTests
             testTree.Insert(6, 1);
             Assert.AreEqual(4, testTree.Root.Nodes[0].Data);
             Assert.AreEqual(6, testTree.Root.Nodes[1].Data);
+            Assert.AreEqual(1, testTree.Height);
         }
 
         [TestMethod]
@@ -58,6 +61,7 @@ namespace BTreeTests
             testTree.Insert(4, 1);
             Assert.AreEqual(4, testTree.Root.Nodes[0].Data);
             Assert.AreEqual(6, testTree.Root.Nodes[1].Data);
+            Assert.AreEqual(1, testTree.Height);
         }
 
         [TestMethod]
@@ -69,6 +73,7 @@ namespace BTreeTests
             testTree.Insert(0, 2);
             Assert.AreEqual(0, testTree.Root.Nodes[0].Nodes[0].Data);
             Assert.AreEqual(2, testTree.Root.Nodes[0].Nodes[1].Data);
+            Assert.AreEqual(2, testTree.Height);
         }
 
         [TestMethod]
@@ -102,6 +107,7 @@ namespace BTreeTests
                 else
                     Assert.Fail();
             }
+            Assert.AreEqual(1, testTree.Height);
         }
 
         [TestMethod]
